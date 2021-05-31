@@ -1,28 +1,57 @@
 import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import result from "./dummyresult";
-const SearchResults = ({ setTitle, setArtist }) => {
-  const handleclick = (title, artist) => {
-    setTitle(title);
-    setArtist(artist);
+
+const SearchResults = ({
+  setTitle,
+  setArtist,
+  setCategory,
+  type,
+  searchResult,
+  categories,
+}) => {
+  const handleClick = (title, artist) => {
+    if (type === "Song") {
+      setTitle(title);
+      setArtist(artist);
+    }
+    if (type === "Artist") {
+      setArtist(artist);
+    }
   };
+  const handleCategoryClick = (category) => {
+    setCategory(category);
+  };
+
   return (
     <ListGroup variant="flush" className="result-list mt-1">
-      {result.map((item) => {
-        return (
-          <ListGroup.Item
-            action
-            onClick={() => handleclick(item.title, item.artist)}
-          >
-            <img
-              src={process.env.PUBLIC_URL + item.image}
-              alt=""
-              className="result-image mr-2"
-            />
-            {item.title} {item.artist}
-          </ListGroup.Item>
-        );
-      })}
+      {type === "Category"
+        ? categories.map((item) => {
+            return (
+              <ListGroup.Item
+                variant="custom"
+                onMouseDown={() => handleCategoryClick(item)}
+                action
+              >
+                {item}
+              </ListGroup.Item>
+            );
+          })
+        : searchResult.map((item) => {
+            return (
+              <ListGroup.Item
+                variant="custom"
+                action
+                onMouseDown={() => handleClick(item.title, item.artist)}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + item.image}
+                  alt=""
+                  className="result-image mr-2"
+                />
+                {item.title} {item.artist}
+              </ListGroup.Item>
+            );
+          })}
     </ListGroup>
   );
 };

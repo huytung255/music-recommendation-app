@@ -1,12 +1,33 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Search from "./components/Search/Search";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PlaylistGenerator from "./components/PlaylistGenerator/PlaylistGenerator";
+import Playlist from "./components/Result/Playlist";
+import MyNavbar from "./components/Navbar/MyNavbar";
+import SongAnalytics from "./components/SongAnalytics/SongAnalytics";
 function App() {
   return (
-    <div className="d-flex index-page flex-column align-items-center">
-      <h1 className=" mb-5 title mt-5">Playlist Generator</h1>
-      <Search />
-    </div>
+    <>
+      <MyNavbar />
+      <div className="mt-1 page-wrap">
+        <div className="page-background"></div>
+        <div className="d-flex index-page-content mt-3 flex-column align-items-center">
+          <Router>
+            <Switch>
+              <Route path="/" exact>
+                <PlaylistGenerator />
+              </Route>
+              <Route path="/result" exact>
+                <Playlist />
+              </Route>
+              <Route path="/song-analytics" exact>
+                <SongAnalytics />
+              </Route>
+            </Switch>
+          </Router>
+        </div>
+      </div>
+    </>
   );
 }
 
