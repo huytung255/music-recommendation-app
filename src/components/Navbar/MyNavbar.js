@@ -9,7 +9,7 @@ const MyNavbar = () => {
           <Nav.Link href="/">Playlist Generator</Nav.Link>
           <Nav.Link href="/song-analytics">Song Analytics</Nav.Link>
           <Nav.Link href="user-analytics">User Analytics</Nav.Link>
-          <Nav.Link href="/top-songs">Top songs</Nav.Link>
+          <Nav.Link href="/new-releases">New releases</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

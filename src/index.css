@@ -19,7 +19,9 @@ body {
   font-weight: 500 !important;
   /* letter-spacing: 0.065em; */
 }
-
+html {
+  overflow-y: scroll;
+}
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: rgb(211, 211, 211) !important;
@@ -60,7 +62,7 @@ body {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(134, 134, 134, 0.18) !important;
   border-radius: 20px;
-  min-height: 95vh;
+  min-height: 90vh;
   height: 100%;
   width: 100%;
   z-index: -1;
@@ -227,7 +229,7 @@ body {
   margin-bottom: 0;
 }
 
-.advanced-options {
+.white-div-wrap {
   /* background: rgba(0, 0, 0, 0.3) !important; */
   background: rgba(255, 255, 255, 0.15) !important;
   border: 1px solid white !important;
@@ -238,20 +240,20 @@ body {
   letter-spacing: 0.0625em;
   font-weight: 500 !important;
   font-size: 13px;
+  width: 100;
 }
 .option-label {
   font-size: 13px;
   color: white !important;
   letter-spacing: 0.0625em;
   font-weight: 600 !important;
-  width: 100%;
   text-align: center;
 }
 .option-length {
   font-size: 13px !important;
 }
 .value-label {
-  text-align: right;
+  width: 50px;
 }
 .option-checkbox {
   width: 100%;
@@ -259,4 +261,15 @@ body {
 }
 .option-checkbox input {
   width: 0% !important;
+}
+.info-icon {
+  font-size: 18px !important;
+}
+.country-label {
+  font-size: 18px;
+  font-weight: 600;
+}
+.analytics-label {
+  font-size: 22px;
+  font-weight: 700;
 }

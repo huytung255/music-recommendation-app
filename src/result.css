@@ -36,7 +36,7 @@
   font-weight: 900 !important;
   letter-spacing: -0.03em !important;
 }
-.seed-artist {
+.seed-subtitle {
   font-weight: 500 !important;
   letter-spacing: -0.03em !important;
   font-size: 20px;
@@ -82,4 +82,28 @@
 .playlist-name-input {
   border-radius: 100px 100px 100px 100px !important;
   height: 45px !important;
+  padding-right: calc(1.5em + 0.75rem);
+}
+.artist-wrap {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(90, 90, 90, 0.18) !important;
+  border-radius: 10px;
+}
+.artist-img {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
+.artist-name {
+  font-size: 17px;
+  font-weight: 700;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.category-wrap {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(90, 90, 90, 0.18) !important;
+  border-radius: 50px 50px;
 }

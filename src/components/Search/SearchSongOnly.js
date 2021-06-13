@@ -3,11 +3,9 @@ import { MdCancel } from "react-icons/md";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import SearchResults from "../Search/SearchResults";
-import dummyresult from "./dummyresult";
+import axios from "axios";
 const SearchSongOnly = ({ props }) => {
-  const [title, setTitle, artist, setArtist, setShowAnalyticsResult] = [
-    ...props,
-  ];
+  const [id, setId, setShowAnalyticsResult] = [...props];
   const [showResult, setShowResult] = useState(false);
   const [isInputValid, setIsInputValid] = useState(true);
   const [isInputDisabled, setIsInputDisabled] = useState(false);
@@ -15,30 +13,45 @@ const SearchSongOnly = ({ props }) => {
   const [searchResult, setSearchResult] = useState();
   const showSearchResult = (e) => {
     setKeywords(e.target.value);
-    setShowResult(true);
-    if (e.target.value === "") setShowResult(false);
-    ///make axios call
-    setSearchResult(dummyresult);
   };
   const hideSearchResult = () => {
     setShowResult(false);
   };
   const clearInput = () => {
-    setTitle("");
-    setArtist("");
+    setId("");
     setIsInputDisabled(false);
     setKeywords("");
   };
   useEffect(() => {
-    if (title === "" && artist === "") return;
+    if (keywords === "" || id !== "") {
+      setShowResult(false);
+      return;
+    }
+    ///make axios call
+    const timeOutId = setTimeout(() => {
+      axios
+        .get("http://localhost:5000/tracks/search", {
+          params: {
+            name: keywords,
+          },
+        })
+        .then((res) => {
+          const { tracks } = res.data;
+          setSearchResult(tracks);
+          setShowResult(true);
+        })
+        .catch((error) => console.log(error));
+    }, 500);
+    return () => clearTimeout(timeOutId);
+  }, [keywords]);
+  useEffect(() => {
+    if (id === "") return;
+    setShowResult(false);
     setIsInputValid(true);
     setIsInputDisabled(true);
-    setShowResult(false);
-    if (title !== "") setKeywords(title + " - " + artist);
-    else setKeywords(artist);
-  }, [title, artist]);
+  }, [id]);
   const analyse = () => {
-    if (title === "" || artist === "") {
+    if (id === "") {
       setIsInputValid(false);
       return;
     }
@@ -76,8 +89,8 @@ const SearchSongOnly = ({ props }) => {
       <div className="result-wrap">
         {showResult ? (
           <SearchResults
-            setTitle={setTitle}
-            setArtist={setArtist}
+            setId={setId}
+            setKeywords={setKeywords}
             type="Song"
             searchResult={searchResult}
           />

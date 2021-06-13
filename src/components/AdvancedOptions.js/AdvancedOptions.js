@@ -1,14 +1,20 @@
 import React from "react";
-import { Dropdown, Form } from "react-bootstrap";
+import Dropdown from "react-bootstrap/Dropdown";
+import Form from "react-bootstrap/Form";
 const AdvancedOptions = ({
   advancedOptions,
   setAdvancedOptions,
   length,
   setLength,
 }) => {
-  const handleOnRangeChange = (e, option) => {
+  const handleOnRangeChangeMax = (e, option) => {
     const temp = { ...advancedOptions };
-    temp[option].value = Number(e.target.value);
+    temp[option].max = Number(e.target.value);
+    setAdvancedOptions(temp);
+  };
+  const handleOnRangeChangeMin = (e, option) => {
+    const temp = { ...advancedOptions };
+    temp[option].min = Number(e.target.value);
     setAdvancedOptions(temp);
   };
   const handleCheck = (option) => {
@@ -20,7 +26,7 @@ const AdvancedOptions = ({
     setLength(e.currentTarget.textContent);
   };
   return (
-    <Form className="advanced-options text-center mt-2">
+    <Form className="white-div-wrap text-center mt-2">
       <Dropdown className="mt-2">
         <p className="option-label m-0">Number of tracks: </p>
         <Dropdown.Toggle
@@ -56,7 +62,7 @@ const AdvancedOptions = ({
           <Form.Group
             key={i}
             controlId={i}
-            className="col-lg-6 col-md-6 col-sm-12 row justify-content-center align-items-center one-advanced-option m-0"
+            className="col-lg-6 col-md-6 col-sm-12 row justify-content-center align-items-center one-advanced-option mx-0 mb-3"
           >
             <div className="col-12 d-flex justify-content-between align-items-center mb-1">
               <div className="option-checkbox d-flex">
@@ -75,19 +81,41 @@ const AdvancedOptions = ({
               <Form.Label className="text-capitalize p-0 option-label mb-0">
                 {option}
               </Form.Label>
-              <Form.Label className="option-label mb-0 value-label">
-                {advancedOptions[option].value}
-              </Form.Label>
+              <div className="w-100"></div>
             </div>
-            <div className="col-12 d-flex justify-content-center align-items-center">
-              <Form.Control
-                type="range"
-                min="0"
-                max="100"
-                step="1"
-                value={advancedOptions[option].value}
-                onChange={(e) => handleOnRangeChange(e, option)}
-              />
+            <div className="col-12 row justify-content-center align-items-center">
+              <div className="d-flex p-0 col-12">
+                <Form.Label className="option-label mb-0 value-label text-left">
+                  Max
+                </Form.Label>
+                <Form.Control
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="1"
+                  value={advancedOptions[option].max}
+                  onChange={(e) => handleOnRangeChangeMax(e, option)}
+                />
+                <Form.Label className="option-label mb-0 value-label text-right">
+                  {advancedOptions[option].max}
+                </Form.Label>
+              </div>
+              <div className="d-flex p-0 col-12">
+                <Form.Label className="option-label mb-0 value-label text-left">
+                  Min
+                </Form.Label>
+                <Form.Control
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="1"
+                  value={advancedOptions[option].min}
+                  onChange={(e) => handleOnRangeChangeMin(e, option)}
+                />
+                <Form.Label className="option-label mb-0 value-label text-right">
+                  {advancedOptions[option].min}
+                </Form.Label>
+              </div>
             </div>
           </Form.Group>
         ))}

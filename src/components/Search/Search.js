@@ -7,14 +7,14 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { MdCancel, MdArrowDropDown } from "react-icons/md";
 import SearchResults from "./SearchResults";
 import AdvancedOptions from "../AdvancedOptions.js/AdvancedOptions";
-import { useHistory, Redirect } from "react-router";
-import dummyresult from "./dummyresult";
-import dummycategories from "./dummycategories";
+import { useHistory } from "react-router";
+import axios from "axios";
 const Search = () => {
   const history = useHistory();
-  const [title, setTitle] = useState("");
-  const [artist, setArtist] = useState("");
+
+  const [id, setId] = useState("");
   const [category, setCategory] = useState("");
+
   const [keywords, setKeywords] = useState("");
   const [type, setType] = useState("Song");
   const [searchResult, setSearchResult] = useState();
@@ -28,37 +28,78 @@ const Search = () => {
 
   const [length, setLength] = useState(10);
   const [advancedOptions, setAdvancedOptions] = useState({
-    acousticness: { isChecked: false, value: 50 },
-    danceability: { isChecked: false, value: 50 },
-    instrumentalness: { isChecked: false, value: 50 },
-    energy: { isChecked: false, value: 50 },
-    valence: { isChecked: false, value: 50 },
-    speechiness: { isChecked: false, value: 50 },
+    acousticness: { isChecked: false, max: 100, min: 0 },
+    danceability: { isChecked: false, max: 100, min: 0 },
+    instrumentalness: { isChecked: false, max: 100, min: 0 },
+    energy: { isChecked: false, max: 100, min: 0 },
+    valence: { isChecked: false, max: 100, min: 0 },
+    speechiness: { isChecked: false, max: 100, min: 0 },
   });
-  // useEffect(() => {
-  //   console.log(advancedOptions);
-  // }, [advancedOptions]);
+
   useEffect(() => {
-    //make axiso call
-    setCategories(dummycategories);
+    //make axios call
+    axios
+      .get("http://localhost:5000/genres/getseeds")
+      .then((res) => {
+        const temp = res.data.genres;
+        setCategories(temp);
+      })
+      .catch((error) => console.log(error));
   }, []);
   useEffect(() => {
-    if (title === "" && artist === "") return;
+    if (keywords === "" || id !== "") {
+      setShowResult(false);
+      return;
+    }
+    ///make axios call
+    const timeOutId = setTimeout(() => {
+      if (type === "Song") {
+        axios
+          .get("http://localhost:5000/tracks/search", {
+            params: {
+              name: keywords,
+            },
+          })
+          .then((res) => {
+            const { tracks } = res.data;
+            setSearchResult(tracks);
+            setShowResult(true);
+          })
+          .catch((error) => console.log(error));
+      }
+      if (type === "Artist") {
+        axios
+          .get("http://localhost:5000/artists/search", {
+            params: {
+              name: keywords,
+            },
+          })
+          .then((res) => {
+            const { artists } = res.data;
+            setSearchResult(artists);
+            setShowResult(true);
+          })
+          .catch((error) => console.log(error));
+      }
+    }, 500);
+    return () => clearTimeout(timeOutId);
+  }, [keywords]);
+  useEffect(() => {
+    if (id === "") return;
+    setShowResult(false);
     setIsInputValid(true);
     setIsInputDisabled(true);
-    setShowResult(false);
-    if (title !== "") setKeywords(title + " - " + artist);
-    else setKeywords(artist);
-  }, [title, artist]);
+  }, [id]);
+  // useEffect(() => {
+  //   console.log(showResult);
+  // }, [showResult]);
   useEffect(() => {
     setIsInputValid(true);
-    setKeywords(category);
   }, [category]);
   useEffect(() => {
     //Reset everything when search type is changed
+    setId("");
     setKeywords("");
-    setArtist("");
-    setTitle("");
     setCategory("");
     setIsInputDisabled(false);
   }, [type]);
@@ -67,26 +108,18 @@ const Search = () => {
   };
   const showSearchResult = (e) => {
     setKeywords(e.target.value);
-    setShowResult(true);
-    if (e.target.value === "") setShowResult(false);
-    ///make axios call
-    setSearchResult(dummyresult);
   };
+
   const hideSearchResult = () => {
     setShowResult(false);
   };
   const clearInput = () => {
-    setTitle("");
-    setArtist("");
     setIsInputDisabled(false);
+    setId("");
     setKeywords("");
   };
   const generate = () => {
-    if (type === "Song" && (title === "" || artist === "")) {
-      setIsInputValid(false);
-      return;
-    }
-    if (type === "Artist" && artist === "") {
+    if ((type === "Song" || type === "Artist") && id === "") {
       setIsInputValid(false);
       return;
     }
@@ -94,32 +127,23 @@ const Search = () => {
       setIsInputValid(false);
       return;
     }
-    //make axios call
+    const finalOptions = {};
+    for (let i in advancedOptions) {
+      finalOptions["max_" + i] = advancedOptions[i].isChecked
+        ? advancedOptions[i].max
+        : null;
+      finalOptions["min_" + i] = advancedOptions[i].isChecked
+        ? advancedOptions[i].min
+        : null;
+    }
     history.push({
       pathname: "/result",
       state: {
-        title: title,
-        artist: artist,
+        id: id,
         category: category,
-        length: length,
-        acousticness: advancedOptions.acousticness.isChecked
-          ? advancedOptions.acousticness.value
-          : null,
-        danceability: advancedOptions.danceability.isChecked
-          ? advancedOptions.danceability.value
-          : null,
-        instrumentalness: advancedOptions.instrumentalness.isChecked
-          ? advancedOptions.instrumentalness.value
-          : null,
-        energy: advancedOptions.energy.isChecked
-          ? advancedOptions.energy.value
-          : null,
-        valence: advancedOptions.valence.isChecked
-          ? advancedOptions.valence.value
-          : null,
-        speechiness: advancedOptions.speechiness.isChecked
-          ? advancedOptions.speechiness.value
-          : null,
+        type: type,
+        n: length,
+        ...finalOptions,
       },
     });
   };
@@ -133,12 +157,12 @@ const Search = () => {
                 as="button"
                 custom={true}
                 isInvalid={!isInputValid}
-                onClick={showSearchResult}
+                onClick={() => setShowResult(!showResult)}
                 onBlur={hideSearchResult}
                 className="input-field"
-                value={keywords === "" ? "Pick a category." : keywords}
+                // value={keywords === "" ? "Pick a category." : keywords}
               >
-                {keywords === "" ? "Pick a category." : keywords}
+                {category === "" ? "Pick a category." : category}
                 <MdArrowDropDown />
               </FormControl>
             </>
@@ -186,9 +210,9 @@ const Search = () => {
       <div className="result-wrap">
         {showResult ? (
           <SearchResults
-            setTitle={setTitle}
-            setArtist={setArtist}
+            setKeywords={setKeywords}
             setCategory={setCategory}
+            setId={setId}
             type={type}
             searchResult={searchResult}
             categories={categories}
