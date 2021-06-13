@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import TrackList from "../Result/TrackList";
 import ArtistList from "../Result/ArtistList";
-import CategoryList from "../Result/CategoryList";
+import GenreList from "../Result/GenreList";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { authorize } from "../../utilfuncs/auth";
 const UserAnalytics = ({ authProps }) => {
   const [showSection, setShowSection] = useState("genres");
+  const [seeds, setSeeds] = useState({
+    tracks: [],
+    artist: [],
+    genres: [],
+  });
   const [trackList, setTrackList] = useState([]);
   const [artistList, setArtistList] = useState([]);
-  const [categoryList, setCategoryList] = useState([]);
+  const [genreList, setGenreList] = useState([]);
   useEffect(() => {
     //make axios call
     if (authProps.isLoggedIn) {
@@ -21,7 +26,7 @@ const UserAnalytics = ({ authProps }) => {
           const { tracks, artists, genres } = res.data;
           setTrackList([...tracks]);
           setArtistList([...artists]);
-          setCategoryList([...genres]);
+          setGenreList([...genres]);
           console.log(res);
         })
         .catch((error) => console.log(error));
@@ -63,7 +68,7 @@ const UserAnalytics = ({ authProps }) => {
               <p className="analytics-label m-3 text-center">
                 Your favorite genres
               </p>
-              <CategoryList categoryList={categoryList} />
+              <GenreList genreList={genreList} />
             </>
           ) : (
             ""

@@ -13,12 +13,12 @@ const Search = () => {
   const history = useHistory();
 
   const [id, setId] = useState("");
-  const [category, setCategory] = useState("");
+  const [genre, setGenre] = useState("");
 
   const [keywords, setKeywords] = useState("");
   const [type, setType] = useState("Song");
   const [searchResult, setSearchResult] = useState();
-  const [categories, setCategories] = useState();
+  const [genres, setGenres] = useState();
 
   const [isInputDisabled, setIsInputDisabled] = useState(false);
   const [isInputValid, setIsInputValid] = useState(true);
@@ -42,7 +42,7 @@ const Search = () => {
       .get("http://localhost:5000/genres/getseeds")
       .then((res) => {
         const temp = res.data.genres;
-        setCategories(temp);
+        setGenres(temp);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -95,12 +95,12 @@ const Search = () => {
   // }, [showResult]);
   useEffect(() => {
     setIsInputValid(true);
-  }, [category]);
+  }, [genre]);
   useEffect(() => {
     //Reset everything when search type is changed
     setId("");
     setKeywords("");
-    setCategory("");
+    setGenre("");
     setIsInputDisabled(false);
   }, [type]);
   const handleTypeClick = (e) => {
@@ -123,7 +123,7 @@ const Search = () => {
       setIsInputValid(false);
       return;
     }
-    if (type === "Category" && category === "") {
+    if (type === "Genre" && genre === "") {
       setIsInputValid(false);
       return;
     }
@@ -140,7 +140,7 @@ const Search = () => {
       pathname: "/result",
       state: {
         id: id,
-        category: category,
+        genre: genre,
         type: type,
         n: length,
         ...finalOptions,
@@ -151,7 +151,7 @@ const Search = () => {
     <div className="search-wrap d-flex flex-column">
       <InputGroup>
         <div className="button-in">
-          {type === "Category" ? (
+          {type === "Genre" ? (
             <>
               <FormControl
                 as="button"
@@ -160,9 +160,9 @@ const Search = () => {
                 onClick={() => setShowResult(!showResult)}
                 onBlur={hideSearchResult}
                 className="input-field"
-                // value={keywords === "" ? "Pick a category." : keywords}
+                // value={keywords === "" ? "Pick a genre." : keywords}
               >
-                {category === "" ? "Pick a category." : category}
+                {genre === "" ? "Pick a genre." : genre}
                 <MdArrowDropDown />
               </FormControl>
             </>
@@ -204,18 +204,18 @@ const Search = () => {
         >
           <Dropdown.Item onClick={handleTypeClick}>Song</Dropdown.Item>
           <Dropdown.Item onClick={handleTypeClick}>Artist</Dropdown.Item>
-          <Dropdown.Item onClick={handleTypeClick}>Category</Dropdown.Item>
+          <Dropdown.Item onClick={handleTypeClick}>Genre</Dropdown.Item>
         </DropdownButton>
       </InputGroup>
       <div className="result-wrap">
         {showResult ? (
           <SearchResults
             setKeywords={setKeywords}
-            setCategory={setCategory}
+            setGenre={setGenre}
             setId={setId}
             type={type}
             searchResult={searchResult}
-            categories={categories}
+            genres={genres}
           />
         ) : (
           ""

@@ -21,12 +21,12 @@ const Playlist = ({ authProps }) => {
       history.push("/");
       return;
     }
-    const { type, id, category, n } = props;
+    const { type, id, genre, n } = props;
     setLength(n);
     const query = props;
     delete query.type;
     delete query.id;
-    delete query.category;
+    delete query.genre;
 
     ///make axios call here
     switch (type) {
@@ -64,9 +64,9 @@ const Playlist = ({ authProps }) => {
           })
           .catch((error) => console.log(error));
         break;
-      case "Category":
+      case "Genre":
         axios
-          .get("http://localhost:5000/genres/generate/" + category, {
+          .get("http://localhost:5000/genres/generate/" + genre, {
             params: {
               ...query,
             },
@@ -74,9 +74,7 @@ const Playlist = ({ authProps }) => {
           .then((res) => {
             const { seed_genre, playlist_duration, tracks } = res.data;
             setTitle(seed_genre);
-            setImage(
-              process.env.PUBLIC_URL + "alexey-ruban-73o_FzZ5x-w-unsplash.jpg"
-            );
+            setImage(process.env.PUBLIC_URL + "music.png");
             setSubtitle("Genre");
             setDuration(playlist_duration);
             setTrackList([...tracks]);

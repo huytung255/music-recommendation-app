@@ -3,11 +3,11 @@ import ListGroup from "react-bootstrap/ListGroup";
 
 const SearchResults = ({
   setKeywords,
-  setCategory,
+  setGenre,
   setId,
   type,
   searchResult,
-  categories,
+  genres,
 }) => {
   const handleSongClick = (id, song, artist) => {
     setId(id);
@@ -17,25 +17,24 @@ const SearchResults = ({
     setId(id);
     setKeywords(name);
   };
-  const handleCategoryClick = (category) => {
-    setCategory(category);
+  const handleGenreClick = (genre) => {
+    setGenre(genre);
   };
   const renderSwitch = (type) => {
     switch (type) {
-      case "Category":
-        return categories.map((item, i) => {
+      case "Genre":
+        return genres.map((item, i) => {
           return (
             <ListGroup.Item
               key={i}
               variant="custom"
-              onMouseDown={() => handleCategoryClick(item)}
+              onMouseDown={() => handleGenreClick(item)}
               action
             >
               {item}
             </ListGroup.Item>
           );
         });
-        break;
       case "Song":
         return searchResult.map((item) => {
           return (
@@ -52,7 +51,7 @@ const SearchResults = ({
             </ListGroup.Item>
           );
         });
-        break;
+
       case "Artist":
         return searchResult.map((item) => {
           return (
@@ -67,6 +66,7 @@ const SearchResults = ({
             </ListGroup.Item>
           );
         });
+      default:
         break;
     }
   };
