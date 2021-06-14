@@ -7,10 +7,11 @@ import axios from "axios";
 import Dropdown from "react-bootstrap/Dropdown";
 import { authorize } from "../../utilfuncs/auth";
 import { useHistory } from "react-router";
-const UserAnalytics = ({ authProps }) => {
+const UserAnalytics = () => {
   const history = useHistory();
   const [length, setLength] = useState(10);
   const [showSection, setShowSection] = useState("genres");
+  const [showAnalytics, setShowAnalytics] = useState(false);
   const [seeds, setSeeds] = useState({
     tracks: [],
     artists: [],
@@ -20,25 +21,25 @@ const UserAnalytics = ({ authProps }) => {
   const [trackList, setTrackList] = useState([]);
   const [artistList, setArtistList] = useState([]);
   const [genreList, setGenreList] = useState([]);
-  useEffect(() => {
-    //make axios call
-    if (authProps.isLoggedIn) {
-      axios
-        .get("http://localhost:5000/users/getanalysis", {
-          withCredentials: true,
-        })
-        .then((res) => {
+
+  const handleGetAnalytics = () => {
+    axios
+      .get("http://localhost:5000/users/getanalysis", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data === "please login") {
+          authorize();
+        } else {
           const { tracks, artists, genres } = res.data;
           setTrackList([...tracks]);
           setArtistList([...artists]);
           setGenreList([...genres]);
+          setShowAnalytics(true);
           console.log(res);
-        })
-        .catch((error) => console.log(error));
-    }
-  }, [authProps.isLoggedIn]);
-  const handleLogin = () => {
-    authorize(authProps.setIsLoggedIn);
+        }
+      })
+      .catch((error) => console.log(error));
   };
   const select = (type, item) => {
     if (nSeeds === 5) return false;
@@ -77,31 +78,31 @@ const UserAnalytics = ({ authProps }) => {
   };
   return (
     <>
-      {authProps.isLoggedIn ? (
+      {showAnalytics ? (
         <>
           <h1 className="text-center mb-3 title mt-3">User Analytics</h1>
           <p className="mb-4 text-center">
             You can pick 5 items and generate a playlist based on your
             interests.
           </p>
-          <div className="d-flex justify-content-between">
+          <div className="row justify-content-center">
             <Button
               variant="custom"
-              className="seed-button"
+              className="seed-button col-lg-4 col-md-4 col-sm-12 my-1"
               onClick={() => setShowSection("genres")}
             >
               Genres
             </Button>
             <Button
               variant="custom"
-              className="seed-button"
+              className="seed-button col-lg-4 col-md-4 col-sm-12 my-1"
               onClick={() => setShowSection("songs")}
             >
               Songs
             </Button>
             <Button
               variant="custom"
-              className="seed-button"
+              className="seed-button col-lg-4 col-md-4 col-sm-12 my-1"
               onClick={() => setShowSection("artists")}
             >
               Artists
@@ -179,16 +180,6 @@ const UserAnalytics = ({ authProps }) => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          {/* <p className="mt-3 text-center">
-            You have picked {nSeeds} items:
-            {seeds.tracks.map(
-              (item) => "\xa0\xa0\xa0" + item.name + "\xa0\xa0\xa0"
-            )}
-            {seeds.artists.map(
-              (item) => "\xa0\xa0\xa0" + item.name + "\xa0\xa0\xa0"
-            )}
-            {seeds.genres.map((item) => "\xa0\xa0\xa0" + item + "\xa0\xa0\xa0")}
-          </p> */}
           <div className="d-flex justify-content-center">
             <Button
               variant="custom"
@@ -202,13 +193,12 @@ const UserAnalytics = ({ authProps }) => {
       ) : (
         <>
           <h1 className="text-center mb-5 title mt-3">User Analytics</h1>
-          <p>Please log in with your spotify account</p>
           <Button
             variant="custom"
             className="seed-button"
-            onClick={() => handleLogin()}
+            onClick={() => handleGetAnalytics()}
           >
-            Log in
+            Get analytics
           </Button>
         </>
       )}

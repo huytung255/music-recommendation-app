@@ -5,7 +5,7 @@ import SaveButton from "./SaveButton";
 import { useHistory, useLocation } from "react-router";
 import axios from "axios";
 import { Spinner } from "react-bootstrap";
-const Playlist = ({ authProps }) => {
+const Playlist = () => {
   const history = useHistory();
   const location = useLocation();
   const [title, setTitle] = useState();
@@ -14,6 +14,7 @@ const Playlist = ({ authProps }) => {
   const [image, setImage] = useState();
   const [duration, setDuration] = useState();
   const [trackList, setTrackList] = useState([]);
+  const [noResults, setNoResults] = useState(false);
   useEffect(() => {
     const props = location.state;
     if (props == null) {
@@ -41,6 +42,9 @@ const Playlist = ({ authProps }) => {
             })
             .then((res) => {
               const { seed_track, playlist_duration, tracks } = res.data;
+              if (tracks.length === 0) {
+                setNoResults(true);
+              }
               setTitle(seed_track.song);
               setImage(seed_track.image);
               setSubtitle(seed_track.artists);
@@ -58,6 +62,9 @@ const Playlist = ({ authProps }) => {
             })
             .then((res) => {
               const { seed_artist, playlist_duration, tracks } = res.data;
+              if (tracks.length === 0) {
+                setNoResults(true);
+              }
               setTitle(seed_artist.name);
               setImage(seed_artist.image);
               setSubtitle("Artist");
@@ -75,6 +82,9 @@ const Playlist = ({ authProps }) => {
             })
             .then((res) => {
               const { seed_genre, playlist_duration, tracks } = res.data;
+              if (tracks.length === 0) {
+                setNoResults(true);
+              }
               setTitle(seed_genre);
               setImage(process.env.PUBLIC_URL + "music.png");
               setSubtitle("Genre");
@@ -103,6 +113,9 @@ const Playlist = ({ authProps }) => {
         )
         .then((res) => {
           const { seed_user, playlist_duration, tracks } = res.data;
+          if (tracks.length === 0) {
+            setNoResults(true);
+          }
           setTitle(seed_user.name + `'s interests`);
           setImage(seed_user.image);
           setSubtitle("User");
@@ -121,10 +134,12 @@ const Playlist = ({ authProps }) => {
         <Spinner className="m-4" animation="border" variant="light" />
       )}
 
-      <SaveButton authProps={authProps} trackList={trackList} />
+      <SaveButton trackList={trackList} />
 
       {trackList.length !== 0 ? (
         <TrackList length={length} trackList={trackList} duration={duration} />
+      ) : noResults ? (
+        <h3 className="m-3 text-center">No results match your requirements.</h3>
       ) : (
         <Spinner className="m-4" animation="border" variant="light" />
       )}

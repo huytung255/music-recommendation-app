@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { authorize } from "../../utilfuncs/auth";
+import MyVerticallyCenteredModal from "../Modal/MyVerticallyCenteredModal";
 import axios from "axios";
-const SaveButton = ({ authProps, trackList }) => {
-  const [showSaveInfo, setShowSaveInfo] = useState(false);
+const SaveButton = ({ trackList }) => {
+  const [showInfo, setShowInfo] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [publicity, setPublicity] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
   const [isInputValid, setIsInputValid] = useState(true);
-  const handleSaveClick = () => {
-    if (authProps.isLoggedIn) setShowSaveInfo(!showSaveInfo);
-    else {
-      authorize(authProps.setIsLoggedIn);
-    }
-  };
   const confirmSaving = () => {
     if (playlistName === "") {
       setIsInputValid(false);
@@ -37,8 +33,11 @@ const SaveButton = ({ authProps, trackList }) => {
         }
       )
       .then((res) => {
-        if (res) {
-          alert("Success");
+        if (res.data === "please login") {
+          authorize();
+        }
+        if (res.data.snapshot_id) {
+          setShowModal(true);
         }
       })
       .catch((error) => console.log(error));
@@ -50,15 +49,19 @@ const SaveButton = ({ authProps, trackList }) => {
 
   return (
     <div className="text-center">
+      <MyVerticallyCenteredModal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+      />
       <Button
         variant="custom"
-        className="seed-button"
-        onClick={() => handleSaveClick()}
+        className="seed-button  my-1"
+        onClick={() => setShowInfo(!showInfo)}
       >
         Save on Spotify
       </Button>
-      {showSaveInfo ? (
-        <Form className="white-div-wrap mt-2 p-3">
+      {showInfo ? (
+        <Form className="white-div-wrap p-3 mt-2">
           <Form.Group>
             <Form.Label className="text-left">Playlist name</Form.Label>
             <Form.Control

@@ -235,6 +235,10 @@ html {
   border: 1px solid white !important;
   border-radius: 20px;
 }
+.white-div-wrap legend {
+  width: auto !important;
+  margin: 0 auto !important;
+}
 .name-label {
   color: white !important;
   letter-spacing: 0.0625em;
@@ -272,4 +276,7 @@ html {
 .analytics-label {
   font-size: 22px;
   font-weight: 700;
+}
+.my-modal {
+  color: black;
 }
