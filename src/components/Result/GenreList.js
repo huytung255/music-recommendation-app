@@ -1,9 +1,10 @@
 import React from "react";
-const GenreList = ({ genreList }) => {
+import Genre from "./Genre";
+const GenreList = ({ genreList, select, deselect }) => {
   return (
-    <div className="d-flex flex-wrap justify-content-center m-0">
-      {genreList.map((genre) => (
-        <div className="genre-wrap px-5 py-2 m-2">{genre}</div>
+    <div className="d-flex flex-wrap justify-content-center mt-3">
+      {genreList.map((genre, i) => (
+        <Genre key={i} genre={genre} select={select} deselect={deselect} />
       ))}
     </div>
   );

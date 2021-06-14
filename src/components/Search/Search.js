@@ -139,6 +139,7 @@ const Search = () => {
     history.push({
       pathname: "/result",
       state: {
+        method: 1,
         id: id,
         genre: genre,
         type: type,

@@ -88,22 +88,59 @@
   background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(90, 90, 90, 0.18) !important;
   border-radius: 10px;
+  width: 100%;
+  color: white;
+}
+.artist-wrap:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 0.4s;
+}
+.artist-wrap-selected {
+  background-color: white !important;
+  color: black !important;
 }
 .artist-img {
-  height: 100px;
-  width: 100px;
+  height: 70px;
+  width: 70px;
   border-radius: 50%;
 }
 .artist-name {
-  font-size: 17px;
+  font-size: 13px;
   font-weight: 700;
   height: 50px;
+
   display: flex;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
 }
 .genre-wrap {
   background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(90, 90, 90, 0.18) !important;
   border-radius: 50px 50px;
+  color: white;
+  transition: background-color 0.4s;
+}
+.genre-wrap:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.genre-wrap-selected {
+  background-color: white !important;
+  color: black !important;
+}
+.clickable-track-wrap {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(90, 90, 90, 0.18) !important;
+  border-radius: 5px;
+  width: 100%;
+  text-align: left;
+  color: white;
+  transition: background-color 0.4s;
+}
+.clickable-track-wrap:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.clickable-track-wrap-selected {
+  background-color: white !important;
+  color: black !important;
 }

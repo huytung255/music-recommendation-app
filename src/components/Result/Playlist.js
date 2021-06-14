@@ -16,71 +16,100 @@ const Playlist = ({ authProps }) => {
   const [trackList, setTrackList] = useState([]);
   useEffect(() => {
     const props = location.state;
-
     if (props == null) {
       history.push("/");
       return;
     }
-    const { type, id, genre, n } = props;
-    setLength(n);
-    const query = props;
-    delete query.type;
-    delete query.id;
-    delete query.genre;
+    const { method } = props;
+    if (method === 1) {
+      const { type, id, genre, n } = props;
+      setLength(n);
+      const query = props;
+      delete query.type;
+      delete query.id;
+      delete query.genre;
+      delete query.method;
 
-    ///make axios call here
-    switch (type) {
-      case "Song":
-        axios
-          .get("http://localhost:5000/tracks/generate/" + id, {
-            params: {
-              ...query,
-            },
-          })
-          .then((res) => {
-            const { seed_track, playlist_duration, tracks } = res.data;
-            setTitle(seed_track.song);
-            setImage(seed_track.image);
-            setSubtitle(seed_track.artists);
-            setDuration(playlist_duration);
-            setTrackList([...tracks]);
-          })
-          .catch((error) => console.log(error));
-        break;
-      case "Artist":
-        axios
-          .get("http://localhost:5000/artists/generate/" + id, {
-            params: {
-              ...query,
-            },
-          })
-          .then((res) => {
-            const { seed_artist, playlist_duration, tracks } = res.data;
-            setTitle(seed_artist.name);
-            setImage(seed_artist.image);
-            setSubtitle("Artist");
-            setDuration(playlist_duration);
-            setTrackList([...tracks]);
-          })
-          .catch((error) => console.log(error));
-        break;
-      case "Genre":
-        axios
-          .get("http://localhost:5000/genres/generate/" + genre, {
-            params: {
-              ...query,
-            },
-          })
-          .then((res) => {
-            const { seed_genre, playlist_duration, tracks } = res.data;
-            setTitle(seed_genre);
-            setImage(process.env.PUBLIC_URL + "music.png");
-            setSubtitle("Genre");
-            setDuration(playlist_duration);
-            setTrackList([...tracks]);
-          })
-          .catch((error) => console.log(error));
-        break;
+      ///make axios call here
+      switch (type) {
+        case "Song":
+          axios
+            .get("http://localhost:5000/tracks/generate/" + id, {
+              params: {
+                ...query,
+              },
+            })
+            .then((res) => {
+              const { seed_track, playlist_duration, tracks } = res.data;
+              setTitle(seed_track.song);
+              setImage(seed_track.image);
+              setSubtitle(seed_track.artists);
+              setDuration(playlist_duration);
+              setTrackList([...tracks]);
+            })
+            .catch((error) => console.log(error));
+          break;
+        case "Artist":
+          axios
+            .get("http://localhost:5000/artists/generate/" + id, {
+              params: {
+                ...query,
+              },
+            })
+            .then((res) => {
+              const { seed_artist, playlist_duration, tracks } = res.data;
+              setTitle(seed_artist.name);
+              setImage(seed_artist.image);
+              setSubtitle("Artist");
+              setDuration(playlist_duration);
+              setTrackList([...tracks]);
+            })
+            .catch((error) => console.log(error));
+          break;
+        case "Genre":
+          axios
+            .get("http://localhost:5000/genres/generate/" + genre, {
+              params: {
+                ...query,
+              },
+            })
+            .then((res) => {
+              const { seed_genre, playlist_duration, tracks } = res.data;
+              setTitle(seed_genre);
+              setImage(process.env.PUBLIC_URL + "music.png");
+              setSubtitle("Genre");
+              setDuration(playlist_duration);
+              setTrackList([...tracks]);
+            })
+            .catch((error) => console.log(error));
+          break;
+      }
+    }
+    if (method === 2) {
+      const { n } = props;
+      setLength(n);
+      const query = props;
+      delete query.method;
+      console.log(query);
+      axios
+        .post(
+          "http://localhost:5000/users/generate-basedon-analysis/",
+          {
+            ...query,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          const { seed_user, playlist_duration, tracks } = res.data;
+          setTitle(seed_user.name + `'s interests`);
+          setImage(seed_user.image);
+          setSubtitle("User");
+          setDuration(playlist_duration);
+          setTrackList([...tracks]);
+        })
+        .catch((error) => console.log(error));
     }
   }, [location]);
   return (
