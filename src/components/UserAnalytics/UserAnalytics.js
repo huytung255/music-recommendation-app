@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ClickableTrackList from "../Result/ClickableTrackList";
 import ArtistList from "../Result/ArtistList";
 import GenreList from "../Result/GenreList";

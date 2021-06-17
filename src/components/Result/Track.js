@@ -1,13 +1,29 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { Spinner } from "react-bootstrap";
 const Track = ({ song, artists, image, id }) => {
   const [showSpotify, setShowSpotify] = useState(false);
   const [showYoutube, setShowYoutube] = useState(false);
+  const [youtubeId, setYoutubeId] = useState("");
   const handleShowPlayer = (player) => {
     if (player === "spotify") {
       setShowYoutube(false);
       setShowSpotify(!showSpotify);
     }
     if (player === "youtube") {
+      if (youtubeId === "") {
+        axios
+          .get("http://localhost:5000/tracks/searchYoutube", {
+            params: {
+              name: song + " " + artists,
+            },
+          })
+          .then((res) => {
+            const { videoId } = res.data;
+            setYoutubeId(videoId);
+          })
+          .catch((error) => console.log(error));
+      }
       setShowSpotify(false);
       setShowYoutube(!showYoutube);
     }
@@ -54,16 +70,20 @@ const Track = ({ song, artists, image, id }) => {
             ""
           )}
           {showYoutube ? (
-            <iframe
-              width="auto"
-              height="auto"
-              src="https://www.youtube.com/embed/tknKZe_TyqU"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              className="mt-3"
-            ></iframe>
+            youtubeId !== "" ? (
+              <iframe
+                width="auto"
+                height="auto"
+                src={"https://www.youtube.com/embed/" + youtubeId}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="mt-3"
+              ></iframe>
+            ) : (
+              <Spinner className="m-4" animation="border" variant="light" />
+            )
           ) : (
             ""
           )}

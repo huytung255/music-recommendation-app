@@ -6,5 +6,6 @@ const anlyticsTooltips = {
   energy: "energy",
   valence: "valence",
   speechiness: "speechiness",
+  liveness: "liveness",
 };
 export default anlyticsTooltips;
