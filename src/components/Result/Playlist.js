@@ -105,7 +105,6 @@ const Playlist = () => {
       setLength(n);
       const query = props;
       delete query.method;
-      console.log(query);
       axios
         .post(
           process.env.REACT_APP_SERVER_URL + "users/generate-basedon-analysis/",
