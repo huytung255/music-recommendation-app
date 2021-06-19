@@ -80,7 +80,10 @@ const NewReleases = () => {
       )}
       {showResult ? (
         <div className="mt-3">
-          <SaveButton trackList={trackList} />
+          <div className="d-flex justify-content-center">
+            <SaveButton trackList={trackList} />
+          </div>
+
           <TrackList
             length={length}
             duration={duration}
