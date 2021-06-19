@@ -33,9 +33,6 @@ const NewReleases = () => {
   const handleLengthClick = (e) => {
     setLength(Number(e.currentTarget.textContent));
   };
-  useEffect(() => {
-    console.log(length);
-  }, [length]);
   return (
     <>
       <h1 className="text-center mb-5 title mt-3">New Releases</h1>
