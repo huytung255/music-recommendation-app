@@ -36,7 +36,6 @@ const UserAnalytics = () => {
           setArtistList([...artists]);
           setGenreList([...genres]);
           setShowAnalytics(true);
-          console.log(res);
         }
       })
       .catch((error) => console.log(error));
