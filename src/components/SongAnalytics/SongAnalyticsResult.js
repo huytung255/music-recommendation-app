@@ -13,7 +13,7 @@ const SongAnalyticsResult = ({ id }) => {
   useEffect(() => {
     //make axios call
     axios
-      .get("https://music-app-spotify.herokuapp.com/tracks/getanalysis/" + id)
+      .get(process.env.REACT_APP_SERVER_URL + "tracks/getanalysis/" + id)
       .then((res) => {
         const { track, features } = res.data;
         setSong(track.song);

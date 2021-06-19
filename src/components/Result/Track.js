@@ -13,7 +13,7 @@ const Track = ({ song, artists, image, id }) => {
     if (player === "youtube") {
       if (youtubeId === "") {
         axios
-          .get("https://music-app-spotify.herokuapp.com/tracks/searchYoutube", {
+          .get(process.env.REACT_APP_SERVER_URL + "tracks/searchYoutube", {
             params: {
               name: song + " " + artists,
             },

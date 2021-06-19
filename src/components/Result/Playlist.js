@@ -35,14 +35,11 @@ const Playlist = () => {
       switch (type) {
         case "Song":
           axios
-            .get(
-              "https://music-app-spotify.herokuapp.com/tracks/generate/" + id,
-              {
-                params: {
-                  ...query,
-                },
-              }
-            )
+            .get(process.env.REACT_APP_SERVER_URL + "tracks/generate/" + id, {
+              params: {
+                ...query,
+              },
+            })
             .then((res) => {
               const { seed_track, playlist_duration, tracks } = res.data;
               if (tracks.length === 0) {
@@ -58,14 +55,11 @@ const Playlist = () => {
           break;
         case "Artist":
           axios
-            .get(
-              "https://music-app-spotify.herokuapp.com/artists/generate/" + id,
-              {
-                params: {
-                  ...query,
-                },
-              }
-            )
+            .get(process.env.REACT_APP_SERVER_URL + "artists/generate/" + id, {
+              params: {
+                ...query,
+              },
+            })
             .then((res) => {
               const { seed_artist, playlist_duration, tracks } = res.data;
               if (tracks.length === 0) {
@@ -82,8 +76,7 @@ const Playlist = () => {
         case "Genre":
           axios
             .get(
-              "https://music-app-spotify.herokuapp.com/genres/generate/" +
-                genre,
+              process.env.REACT_APP_SERVER_URL + "genres/generate/" + genre,
               {
                 params: {
                   ...query,
@@ -115,7 +108,8 @@ const Playlist = () => {
       console.log(query);
       axios
         .post(
-          "https://music-app-spotify.herokuapp.com/users/generate-basedon-analysis/",
+          process.env.REACT_APP_SERVER_URL +
+            "/users/generate-basedon-analysis/",
           {
             ...query,
           },

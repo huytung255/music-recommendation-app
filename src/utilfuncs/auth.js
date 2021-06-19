@@ -1,5 +1,5 @@
 const authorize = () => {
-  const url = "https://music-app-spotify.herokuapp.com/login/";
+  const url = process.env.REACT_APP_SERVER_URL + "login/";
   const width = 450,
     height = 730,
     left = window.screen.width / 2 - width / 2,

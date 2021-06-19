@@ -24,7 +24,7 @@ const UserAnalytics = () => {
 
   const handleGetAnalytics = () => {
     axios
-      .get("https://music-app-spotify.herokuapp.com/users/getanalysis", {
+      .get(process.env.REACT_APP_SERVER_URL + "users/getanalysis", {
         withCredentials: true,
       })
       .then((res) => {

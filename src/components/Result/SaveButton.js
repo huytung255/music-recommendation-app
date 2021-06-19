@@ -22,7 +22,7 @@ const SaveButton = ({ trackList }) => {
     }
     axios
       .post(
-        "https://music-app-spotify.herokuapp.com/users/createplaylist",
+        process.env.REACT_APP_SERVER_URL + "users/createplaylist",
         {
           playlist_name: playlistName,
           public: publicity,
