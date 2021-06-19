@@ -35,11 +35,14 @@ const Playlist = () => {
       switch (type) {
         case "Song":
           axios
-            .get("http://localhost:5000/tracks/generate/" + id, {
-              params: {
-                ...query,
-              },
-            })
+            .get(
+              "https://music-app-spotify.herokuapp.com/tracks/generate/" + id,
+              {
+                params: {
+                  ...query,
+                },
+              }
+            )
             .then((res) => {
               const { seed_track, playlist_duration, tracks } = res.data;
               if (tracks.length === 0) {
@@ -55,11 +58,14 @@ const Playlist = () => {
           break;
         case "Artist":
           axios
-            .get("http://localhost:5000/artists/generate/" + id, {
-              params: {
-                ...query,
-              },
-            })
+            .get(
+              "https://music-app-spotify.herokuapp.com/artists/generate/" + id,
+              {
+                params: {
+                  ...query,
+                },
+              }
+            )
             .then((res) => {
               const { seed_artist, playlist_duration, tracks } = res.data;
               if (tracks.length === 0) {
@@ -75,11 +81,15 @@ const Playlist = () => {
           break;
         case "Genre":
           axios
-            .get("http://localhost:5000/genres/generate/" + genre, {
-              params: {
-                ...query,
-              },
-            })
+            .get(
+              "https://music-app-spotify.herokuapp.com/genres/generate/" +
+                genre,
+              {
+                params: {
+                  ...query,
+                },
+              }
+            )
             .then((res) => {
               const { seed_genre, playlist_duration, tracks } = res.data;
               if (tracks.length === 0) {
@@ -103,7 +113,7 @@ const Playlist = () => {
       console.log(query);
       axios
         .post(
-          "http://localhost:5000/users/generate-basedon-analysis/",
+          "https://music-app-spotify.herokuapp.com/users/generate-basedon-analysis/",
           {
             ...query,
           },

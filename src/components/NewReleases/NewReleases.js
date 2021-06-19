@@ -16,7 +16,7 @@ const NewReleases = () => {
     //make axios call
     setLoading(true);
     axios
-      .get("http://localhost:5000/tracks/newreleases/", {
+      .get("https://music-app-spotify.herokuapp.com/tracks/newreleases/", {
         params: {
           n: length,
         },

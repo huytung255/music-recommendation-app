@@ -24,7 +24,7 @@ const UserAnalytics = () => {
 
   const handleGetAnalytics = () => {
     axios
-      .get("http://localhost:5000/users/getanalysis", {
+      .get("https://music-app-spotify.herokuapp.com/users/getanalysis", {
         withCredentials: true,
       })
       .then((res) => {

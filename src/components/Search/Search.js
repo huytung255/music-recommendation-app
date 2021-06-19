@@ -39,7 +39,7 @@ const Search = () => {
   useEffect(() => {
     //make axios call
     axios
-      .get("http://localhost:5000/genres/getseeds")
+      .get("https://music-app-spotify.herokuapp.com/genres/getseeds")
       .then((res) => {
         const temp = res.data.genres;
         setGenres(temp);
@@ -55,7 +55,7 @@ const Search = () => {
     const timeOutId = setTimeout(() => {
       if (type === "Song") {
         axios
-          .get("http://localhost:5000/tracks/search", {
+          .get("https://music-app-spotify.herokuapp.com/tracks/search", {
             params: {
               name: keywords,
             },
@@ -69,7 +69,7 @@ const Search = () => {
       }
       if (type === "Artist") {
         axios
-          .get("http://localhost:5000/artists/search", {
+          .get("https://music-app-spotify.herokuapp.com/artists/search", {
             params: {
               name: keywords,
             },

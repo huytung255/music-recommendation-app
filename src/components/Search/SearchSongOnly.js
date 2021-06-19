@@ -30,7 +30,7 @@ const SearchSongOnly = ({ props }) => {
     ///make axios call
     const timeOutId = setTimeout(() => {
       axios
-        .get("http://localhost:5000/tracks/search", {
+        .get("https://music-app-spotify.herokuapp.com/tracks/search", {
           params: {
             name: keywords,
           },
