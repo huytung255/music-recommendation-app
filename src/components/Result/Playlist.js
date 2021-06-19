@@ -108,8 +108,7 @@ const Playlist = () => {
       console.log(query);
       axios
         .post(
-          process.env.REACT_APP_SERVER_URL +
-            "/users/generate-basedon-analysis/",
+          process.env.REACT_APP_SERVER_URL + "users/generate-basedon-analysis/",
           {
             ...query,
           },
