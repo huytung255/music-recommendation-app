@@ -103,6 +103,8 @@ const Playlist = () => {
             })
             .catch((error) => console.log(error));
           break;
+        default:
+          break;
       }
     }
     if (method === 2) {

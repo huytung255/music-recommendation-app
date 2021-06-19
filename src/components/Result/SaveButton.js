@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { authorize } from "../../utilfuncs/auth";
 import MyVerticallyCenteredModal from "../Modal/MyVerticallyCenteredModal";

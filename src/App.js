@@ -7,14 +7,7 @@ import MyNavbar from "./components/Navbar/MyNavbar";
 import SongAnalytics from "./components/SongAnalytics/SongAnalytics";
 import UserAnalytics from "./components/UserAnalytics/UserAnalytics";
 import NewReleases from "./components/NewReleases/NewReleases";
-import { useState, useEffect } from "react";
 function App() {
-  // const [isLoggedIn, setIsLoggedIn] = useState();
-  // const authProps = { isLoggedIn, setIsLoggedIn };
-  // useBackgroundService(isLoggedIn, setIsLoggedIn);
-  // useEffect(() => {
-  //   setIsLoggedIn(localStorage.getItem("isLoggedIn"));
-  // }, []);
   return (
     <>
       <MyNavbar />
