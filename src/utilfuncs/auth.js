@@ -4,7 +4,6 @@ const authorize = () => {
     height = 730,
     left = window.screen.width / 2 - width / 2,
     top = window.screen.height / 2 - height / 2;
-
   window.open(
     url,
     "Spotify",

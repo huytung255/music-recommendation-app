@@ -5,7 +5,7 @@ import { Spinner } from "react-bootstrap";
 import TrackList from "../Result/TrackList";
 import SaveButton from "../Result/SaveButton";
 import axios from "axios";
-import { useEffect } from "react";
+
 const NewReleases = () => {
   const [length, setLength] = useState(10);
   const [duration, setDuration] = useState();
