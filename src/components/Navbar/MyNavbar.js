@@ -22,7 +22,6 @@ const MyNavbar = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data === "please login") {
           setIsLoggedIn(false);
         }
