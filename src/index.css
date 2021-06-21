@@ -43,9 +43,23 @@ html {
   -webkit-backdrop-filter: blur(30px);
   border: 1px solid rgba(202, 202, 202, 0.18) !important;
 }
-.navbar-light .navbar-nav .nav-link {
+.link {
   color: white !important;
   font-weight: 500;
+}
+.login-button {
+  border-radius: 100px;
+  background-color: white;
+  color: black !important;
+  /* height: 30px; */
+  display: flex !important;
+  align-items: center;
+  align-self: center;
+  padding: 3px 15px !important;
+}
+.login-button img {
+  height: 20px;
+  border-radius: 50%;
 }
 .page-wrap {
   position: relative;
