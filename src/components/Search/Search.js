@@ -18,7 +18,7 @@ const Search = () => {
   const [keywords, setKeywords] = useState("");
   const [type, setType] = useState("Song");
   const [searchResult, setSearchResult] = useState();
-  const [genres, setGenres] = useState();
+  const [genres, setGenres] = useState([]);
 
   const [isInputDisabled, setIsInputDisabled] = useState(false);
   const [isInputValid, setIsInputValid] = useState(true);
@@ -42,7 +42,7 @@ const Search = () => {
       .get(process.env.REACT_APP_SERVER_URL + "genres/getseeds")
       .then((res) => {
         const temp = res.data.genres;
-        setGenres(temp);
+        setGenres([...temp]);
       })
       .catch((error) => console.log(error));
   }, []);
