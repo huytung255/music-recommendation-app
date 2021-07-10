@@ -70,8 +70,8 @@ const MyNavbar = () => {
             New releases
           </Nav.Link>
           {isLoggedIn ? (
-            <Nav.Link onClick={logout} className="login-button">
-              <img src={userImg} alt="user" className="mr-1" /> Log out
+            <Nav.Link onClick={logout} className="logout-button">
+              <img src={userImg} alt="" className="mr-1" /> Log out
             </Nav.Link>
           ) : (
             <Nav.Link onClick={login} className="login-button">

@@ -61,6 +61,20 @@ html {
   height: 20px;
   border-radius: 50%;
 }
+.logout-button {
+  border-radius: 100px;
+  background-color: white;
+  color: black !important;
+  /* height: 30px; */
+  display: flex !important;
+  align-items: center;
+  align-self: center;
+  padding: 3px 15px !important;
+}
+.logout-button img {
+  height: 20px;
+  border-radius: 50%;
+}
 .page-wrap {
   position: relative;
   width: 97vw;
