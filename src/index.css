@@ -73,6 +73,8 @@ html {
 }
 .logout-button img {
   height: 20px;
+  width: 20px;
+  background-color: rgb(0, 0, 0);
   border-radius: 50%;
 }
 .page-wrap {
@@ -231,6 +233,7 @@ html {
 .result-image {
   width: 50px;
   height: 50px;
+  background: #000000;
 }
 .list-group-item-custom:hover {
   background: rgba(0, 0, 0, 0.4) !important;

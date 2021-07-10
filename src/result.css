@@ -55,6 +55,7 @@
   min-height: 50px; */
   width: 60px;
   height: 60px;
+  background-image: #000000;
   border-radius: 5px;
 }
 .track-info-title {
@@ -102,6 +103,7 @@
 .artist-img {
   height: 70px;
   width: 70px;
+  background: #000000;
   border-radius: 50%;
 }
 .artist-name {
