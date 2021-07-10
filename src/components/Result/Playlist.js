@@ -121,7 +121,9 @@ const Playlist = () => {
             setNoResults(true);
           }
           setTitle(seed_user.name + `'s interests`);
-          setImage(seed_user.image);
+          if (seed_user.image === "")
+            setImage(process.env.PUBLIC_URL + "music.png");
+          else setImage(seed_user.image);
           setSubtitle("User");
           setDuration(playlist_duration);
           setTrackList([...tracks]);
