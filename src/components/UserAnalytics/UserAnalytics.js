@@ -107,14 +107,14 @@ const UserAnalytics = () => {
               Artists
             </Button>
           </div>
-          <div className={showSection === "genres" ? "" : "d-none"}>
+          <div className={showSection === "genres" ? "w-100" : "d-none"}>
             <GenreList
               genreList={genreList}
               select={select}
               deselect={deselect}
             />
           </div>
-          <div className={showSection === "songs" ? "" : "d-none"}>
+          <div className={showSection === "songs" ? "w-100" : "d-none"}>
             <ClickableTrackList
               length={10}
               trackList={trackList}
@@ -122,7 +122,7 @@ const UserAnalytics = () => {
               deselect={deselect}
             />
           </div>
-          <div className={showSection === "artists" ? "" : "d-none"}>
+          <div className={showSection === "artists" ? "w-100" : "d-none"}>
             <ArtistList
               artistList={artistList}
               select={select}
