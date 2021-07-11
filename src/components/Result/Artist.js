@@ -19,7 +19,11 @@ const Artist = ({ id, name, image, select, deselect }) => {
         className={`artist-wrap text-center py-4 ` + selectedCSS}
         onClick={() => handleClick(id, name)}
       >
-        <img src={image} alt="" className="artist-img mb-2" />
+        <img
+          src={image !== "" ? image : process.env.PUBLIC_URL + "music.png"}
+          alt=""
+          className="artist-img mb-2"
+        />
         <div className="artist-name text-center">{name}</div>
       </button>
     </div>

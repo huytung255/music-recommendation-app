@@ -46,7 +46,15 @@ const SearchResults = ({
                 handleSongClick(item.id, item.song, item.artists)
               }
             >
-              <img src={item.image} alt="" className="result-image mr-2" />
+              <img
+                src={
+                  item.image !== ""
+                    ? item.image
+                    : process.env.PUBLIC_URL + "music.png"
+                }
+                alt=""
+                className="result-image mr-2"
+              />
               {item.song} - {item.artists}
             </ListGroup.Item>
           );
