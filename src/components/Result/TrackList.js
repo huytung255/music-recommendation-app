@@ -3,7 +3,7 @@ import Track from "./Track";
 
 const TrackList = ({ length, trackList, duration }) => {
   return (
-    <div>
+    <div className="w-100">
       <p className="text-center m-3">
         {length} tracks. {duration ? duration : ""}
       </p>
