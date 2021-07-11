@@ -75,7 +75,7 @@ const SearchSongOnly = ({ props }) => {
         />
         {isInputDisabled ? (
           <a
-            href="/#"
+            href="#"
             className="erase-button d-flex justify-content-center"
             onClick={() => clearInput()}
           >
